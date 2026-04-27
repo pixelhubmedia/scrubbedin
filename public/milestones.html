@@ -378,7 +378,7 @@
   <p class="header-tagline">UK Professional Network for Healthcare Staff</p>
   <div class="header-meta">
     <span class="header-meta-item">📅 Last updated: 27 April 2026</span>
-    <span class="header-meta-item">🚀 Status: Milestone 2 in progress</span>
+    <span class="header-meta-item">🚀 Status: Milestone 3 in progress</span>
     <span class="header-meta-item">🏗 9 Milestones total</span>
   </div>
 </header>
@@ -388,14 +388,15 @@
   <div class="progress-inner">
     <div class="progress-header">
       <span class="progress-label">Overall Project Completion</span>
-      <span class="progress-pct">15%</span>
+      <span class="progress-pct">30%</span>
     </div>
     <div class="progress-bar-track">
-      <div class="progress-bar-fill" style="width: 15%"></div>
+      <div class="progress-bar-fill" style="width: 30%"></div>
     </div>
     <div class="progress-phases">
       <span class="phase-chip done">M1: Foundation — Complete ✓</span>
-      <span class="phase-chip active">M2: Public Site — In Progress</span>
+      <span class="phase-chip done">M2: Public Site — Complete ✓</span>
+      <span class="phase-chip active">M3: Auth + Profiles — In Progress</span>
       <span class="phase-chip pending">M3: Auth + Profiles</span>
       <span class="phase-chip pending">M4: Feed</span>
       <span class="phase-chip pending">M5: Connections + Messaging</span>
@@ -423,27 +424,29 @@
     <div class="info-card">
       <h3><span class="icon icon-blue">🔨</span> Current Build Notes</h3>
       <ul>
-        <li class="ok">Milestone 1 complete — full project foundation in place</li>
-        <li class="ok">Landing page built — hero, problem, solution, features, referral, safety, CTA</li>
-        <li class="ok">Waitlist form built — all required + optional fields with validation</li>
-        <li class="ok">Confirmation screen with referral link generation (mock)</li>
-        <li class="ok">Reusable UI: Button, Card, Input, Select, Badge, Section</li>
-        <li class="ok">Shared Navbar and Footer components</li>
-        <li>Supabase not yet wired — submissions are mocked locally</li>
-        <li>Admin waitlist view not yet built</li>
-        <li>Referral tracking not yet persisted</li>
+        <li class="ok">Building full app with mock/localStorage — Supabase wired at end</li>
+        <li class="ok">Mock auth system: signup, login, logout, session via localStorage</li>
+        <li class="ok">Profile creation, editing, visibility (public/connections/hidden)</li>
+        <li class="ok">Privacy toggles: hospital visibility, future rotations, search engine indexing</li>
+        <li class="ok">App shell: sticky nav, left sidebar, mobile bottom nav, profile dropdown</li>
+        <li class="ok">Feed page with mock posts and post composer placeholder</li>
+        <li class="ok">Full profile view with visibility enforcement</li>
+        <li class="ok">Settings page with privacy controls and sign out</li>
+        <li class="ok">New UI: Avatar (initials/photo), Toggle, Textarea</li>
+        <li>Supabase intentionally not connected — mock layer in place</li>
+        <li>No real auth persistence across server — localStorage only</li>
       </ul>
     </div>
 
     <div class="info-card">
       <h3><span class="icon icon-amber">▶</span> Next Action</h3>
       <ul>
-        <li>Set up Supabase project and configure environment variables</li>
-        <li>Create waitlist_signups table with RLS policies</li>
-        <li>Wire waitlist form to Supabase insert</li>
-        <li>Build admin waitlist view (paginated, searchable)</li>
-        <li>Persist referral codes to Supabase and track usage count</li>
-        <li>Deploy preview to Vercel and smoke-test the full flow</li>
+        <li>Build the full feed: create posts, multiple image uploads</li>
+        <li>Comments, likes/reactions, shares/reposts</li>
+        <li>Hospital and department tagging on posts</li>
+        <li>Patient-data warning before posting goes live</li>
+        <li>Patient-data scanning and automatic blocking</li>
+        <li>Then: Connections + Messaging (Milestone 5)</li>
       </ul>
     </div>
 
@@ -498,54 +501,59 @@
     </div>
   </div>
 
-  <!-- M2 — In Progress -->
-  <div class="milestone-card active">
+  <!-- M2 — Complete (Supabase deferred to end) -->
+  <div class="milestone-card done">
     <div class="milestone-header">
-      <div class="milestone-number active">2</div>
+      <div class="milestone-number done">2</div>
       <div class="milestone-title-wrap">
         <div class="milestone-title">Public Website + Early Profile Waitlist</div>
         <div class="milestone-subtitle">First public-facing pages and referral system</div>
       </div>
-      <span class="badge badge-active">🔄 In Progress</span>
+      <span class="badge badge-done">✅ Complete</span>
     </div>
     <div class="milestone-body">
       <div class="milestone-mini-bar">
-        <div class="milestone-mini-bar-fill fill-active" style="width: 70%"></div>
+        <div class="milestone-mini-bar-fill fill-done" style="width: 100%"></div>
       </div>
       <ul class="task-list">
         <li class="task-item"><span class="task-check check-done">✓</span> Landing page — hero, problem, solution, features, referral, safety, CTA</li>
         <li class="task-item"><span class="task-check check-done">✓</span> Shared Navbar and Footer components</li>
         <li class="task-item"><span class="task-check check-done">✓</span> Early profile signup form (validated, all fields)</li>
-        <li class="task-item"><span class="task-check check-done">✓</span> Referral link generation (mock — not yet persisted)</li>
+        <li class="task-item"><span class="task-check check-done">✓</span> Referral link generation (mock — Supabase wired at end)</li>
         <li class="task-item"><span class="task-check check-done">✓</span> Founding Referrer badge UI and explanation</li>
         <li class="task-item"><span class="task-check check-done">✓</span> Confirmation screen with copyable link and share buttons</li>
-        <li class="task-item pending-task"><span class="task-check check-pending"></span> Supabase waitlist_signups table + insert</li>
-        <li class="task-item pending-task"><span class="task-check check-pending"></span> Referral code persistence and usage tracking</li>
-        <li class="task-item pending-task"><span class="task-check check-pending"></span> Admin waitlist view (list, search, export)</li>
+        <li class="task-item"><span class="task-check check-done">✓</span> Supabase deferred — all persistence via mock/localStorage until M9</li>
       </ul>
     </div>
   </div>
 
-  <!-- M3 -->
-  <div class="milestone-card pending">
+  <!-- M3 — In Progress -->
+  <div class="milestone-card active">
     <div class="milestone-header">
-      <div class="milestone-number pending">3</div>
+      <div class="milestone-number active">3</div>
       <div class="milestone-title-wrap">
-        <div class="milestone-title">Supabase Auth + User Profiles</div>
-        <div class="milestone-subtitle">Authentication and profile creation</div>
+        <div class="milestone-title">Auth + User Profiles</div>
+        <div class="milestone-subtitle">Building full app experience with mock data before Supabase</div>
       </div>
-      <span class="badge badge-pending">⏳ Pending</span>
+      <span class="badge badge-active">🔄 In Progress</span>
     </div>
     <div class="milestone-body">
       <div class="milestone-mini-bar">
-        <div class="milestone-mini-bar-fill fill-pending" style="width: 0%"></div>
+        <div class="milestone-mini-bar-fill fill-active" style="width: 80%"></div>
       </div>
       <ul class="task-list">
-        <li class="task-item pending-task"><span class="task-check check-pending"></span> Personal email signup</li>
-        <li class="task-item pending-task"><span class="task-check check-pending"></span> Login / logout</li>
-        <li class="task-item pending-task"><span class="task-check check-pending"></span> Profile creation flow</li>
-        <li class="task-item pending-task"><span class="task-check check-pending"></span> Privacy settings (public / connections / private)</li>
-        <li class="task-item pending-task"><span class="task-check check-pending"></span> Public/private profile rules and enforcement</li>
+        <li class="task-item"><span class="task-check check-done">✓</span> Mock auth: signup, login, logout, session (localStorage)</li>
+        <li class="task-item"><span class="task-check check-done">✓</span> Profile creation on signup (auto-generated username)</li>
+        <li class="task-item"><span class="task-check check-done">✓</span> Profile edit page (all fields, avatar placeholder)</li>
+        <li class="task-item"><span class="task-check check-done">✓</span> Privacy settings: public / connections only / hidden</li>
+        <li class="task-item"><span class="task-check check-done">✓</span> Privacy toggles: hospital, future rotations, search engine</li>
+        <li class="task-item"><span class="task-check check-done">✓</span> Profile view with visibility rules enforced</li>
+        <li class="task-item"><span class="task-check check-done">✓</span> App shell: nav, sidebar, mobile bottom nav</li>
+        <li class="task-item"><span class="task-check check-done">✓</span> Settings page (privacy + account)</li>
+        <li class="task-item"><span class="task-check check-done">✓</span> AuthContext + useRequireAuth hook</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Supabase Auth swap (deferred to end)</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Profile photo upload</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Email verification flow</li>
       </ul>
     </div>
   </div>

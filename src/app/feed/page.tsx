@@ -1,11 +1,12 @@
-import PlaceholderPage from "@/components/ui/PlaceholderPage";
+import AppShell from "@/components/app/AppShell";
+import FeedClient from "./FeedClient";
+
+export const metadata = { title: "Feed — Scrubbed In" };
 
 export default function FeedPage() {
   return (
-    <PlaceholderPage
-      title="Your Professional Feed"
-      description="See posts from your connections, hospital colleagues, and departments. Share updates, insights, and milestones — with patient-data protection built in."
-      badge="Feed"
-    />
+    <AppShell>
+      <FeedClient />
+    </AppShell>
   );
 }
