@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scrubbed In — Project Milestones</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue-900: #1e3a8a;
+      --blue-800: #1e40af;
+      --blue-700: #1d4ed8;
+      --blue-600: #2563eb;
+      --blue-500: #3b82f6;
+      --blue-100: #dbeafe;
+      --blue-50:  #eff6ff;
+      --slate-900: #0f172a;
+      --slate-700: #334155;
+      --slate-500: #64748b;
+      --slate-400: #94a3b8;
+      --slate-200: #e2e8f0;
+      --slate-100: #f1f5f9;
+      --slate-50:  #f8fafc;
+      --green-600: #16a34a;
+      --green-100: #dcfce7;
+      --green-700: #15803d;
+      --amber-600: #d97706;
+      --amber-100: #fef3c7;
+      --amber-700: #b45309;
+      --red-600:   #dc2626;
+      --red-100:   #fee2e2;
+      --red-700:   #b91c1c;
+      --white: #ffffff;
+      --radius: 12px;
+      --shadow: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,.08), 0 2px 4px -1px rgba(0,0,0,.06);
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--slate-50);
+      color: var(--slate-900);
+      line-height: 1.6;
+      padding: 0;
+    }
+
+    /* ── Header ── */
+    .header {
+      background: linear-gradient(135deg, var(--blue-900) 0%, var(--blue-700) 100%);
+      color: white;
+      padding: 40px 24px 32px;
+      text-align: center;
+    }
+    .header-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+    .header-logo span.accent { color: #93c5fd; }
+    .header-tagline {
+      font-size: 14px;
+      opacity: 0.8;
+      margin-bottom: 24px;
+      letter-spacing: 0.3px;
+    }
+    .header-meta {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 12px;
+    }
+    .header-meta-item {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.18);
+      padding: 4px 12px;
+      border-radius: 20px;
+    }
+
+    /* ── Overall progress ── */
+    .progress-section {
+      background: white;
+      border-bottom: 1px solid var(--slate-200);
+      padding: 28px 24px;
+    }
+    .progress-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 10px;
+    }
+    .progress-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--slate-700);
+    }
+    .progress-pct {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--blue-700);
+    }
+    .progress-bar-track {
+      height: 12px;
+      background: var(--slate-100);
+      border-radius: 99px;
+      overflow: hidden;
+      border: 1px solid var(--slate-200);
+    }
+    .progress-bar-fill {
+      height: 100%;
+      border-radius: 99px;
+      background: linear-gradient(90deg, var(--blue-700), var(--blue-500));
+      width: 6%;
+      transition: width 0.6s ease;
+      position: relative;
+    }
+    .progress-bar-fill::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 6px; height: 100%;
+      background: rgba(255,255,255,0.4);
+      border-radius: 0 99px 99px 0;
+    }
+    .progress-phases {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+    .phase-chip {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+      border: 1px solid transparent;
+    }
+    .phase-chip.done     { background: var(--green-100);  color: var(--green-700);  border-color: #bbf7d0; }
+    .phase-chip.active   { background: var(--amber-100);  color: var(--amber-700);  border-color: #fde68a; }
+    .phase-chip.pending  { background: var(--slate-100);  color: var(--slate-500);  border-color: var(--slate-200); }
+
+    /* ── Main content ── */
+    .main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 32px 24px 64px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* ── Section headings ── */
+    .section-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--slate-400);
+      margin-top: 12px;
+      margin-bottom: 4px;
+      padding-left: 2px;
+    }
+
+    /* ── Info panels ── */
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .info-card {
+      background: white;
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+    .info-card h3 {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--slate-700);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .info-card h3 .icon {
+      width: 22px; height: 22px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+    }
+    .icon-blue   { background: var(--blue-100); }
+    .icon-amber  { background: var(--amber-100); }
+    .icon-red    { background: var(--red-100); }
+    .icon-green  { background: var(--green-100); }
+    .info-card ul {
+      list-style: none;
+      font-size: 13px;
+      color: var(--slate-700);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .info-card ul li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      line-height: 1.5;
+    }
+    .info-card ul li::before {
+      content: '→';
+      color: var(--blue-500);
+      font-size: 11px;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+    .info-card ul li.warn::before { content: '⚠'; color: var(--amber-600); }
+    .info-card ul li.risk::before { content: '!'; color: var(--red-600); font-weight: 700; }
+    .info-card ul li.ok::before   { content: '✓'; color: var(--green-600); }
+
+    .alert-banner {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 13px;
+      color: var(--red-700);
+      font-weight: 500;
+      line-height: 1.5;
+    }
+    .alert-banner .alert-icon { font-size: 18px; flex-shrink: 0; margin-top: -1px; }
+
+    /* ── Milestone cards ── */
+    .milestone-card {
+      background: white;
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .milestone-card.active {
+      border-color: var(--blue-500);
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.12), var(--shadow-md);
+    }
+    .milestone-card.done {
+      border-color: #86efac;
+    }
+
+    .milestone-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 20px 20px 16px;
+    }
+    .milestone-number {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+    .milestone-number.done    { background: var(--green-100); color: var(--green-700); }
+    .milestone-number.active  { background: var(--blue-100);  color: var(--blue-700); }
+    .milestone-number.pending { background: var(--slate-100); color: var(--slate-400); }
+
+    .milestone-title-wrap { flex: 1; }
+    .milestone-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--slate-900);
+      line-height: 1.3;
+    }
+    .milestone-card.pending .milestone-title { color: var(--slate-500); }
+    .milestone-subtitle {
+      font-size: 12px;
+      color: var(--slate-400);
+      margin-top: 2px;
+    }
+
+    .badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .badge-done    { background: var(--green-100);  color: var(--green-700); }
+    .badge-active  { background: var(--amber-100);  color: var(--amber-700); }
+    .badge-pending { background: var(--slate-100);  color: var(--slate-400); }
+
+    .milestone-body {
+      padding: 0 20px 20px 72px;
+    }
+
+    .milestone-mini-bar {
+      height: 4px;
+      background: var(--slate-100);
+      border-radius: 99px;
+      margin-bottom: 14px;
+      overflow: hidden;
+    }
+    .milestone-mini-bar-fill {
+      height: 100%;
+      border-radius: 99px;
+    }
+    .fill-done    { background: var(--green-600); }
+    .fill-active  { background: var(--blue-500); }
+    .fill-pending { background: var(--slate-200); }
+
+    .task-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .task-item {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-size: 13px;
+      color: var(--slate-700);
+    }
+    .task-item.pending-task { color: var(--slate-400); }
+    .task-check {
+      width: 16px; height: 16px;
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px;
+      flex-shrink: 0;
+    }
+    .check-done    { background: var(--green-100); color: var(--green-700); border: 1.5px solid #86efac; }
+    .check-active  { background: var(--blue-100);  color: var(--blue-700);  border: 1.5px solid var(--blue-500); }
+    .check-pending { background: white;             color: var(--slate-300); border: 1.5px solid var(--slate-200); }
+
+    /* ── Footer ── */
+    .footer {
+      text-align: center;
+      padding: 24px;
+      font-size: 12px;
+      color: var(--slate-400);
+      border-top: 1px solid var(--slate-200);
+      background: white;
+    }
+    .footer strong { color: var(--slate-600); }
+
+    @media (max-width: 600px) {
+      .milestone-body { padding-left: 20px; }
+      .info-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Header ── -->
+<header class="header">
+  <div class="header-logo">
+    <span class="accent">S</span>crubbed In
+  </div>
+  <p class="header-tagline">UK Professional Network for Healthcare Staff</p>
+  <div class="header-meta">
+    <span class="header-meta-item">📅 Last updated: 27 April 2026</span>
+    <span class="header-meta-item">🚀 Status: Milestone 2 in progress</span>
+    <span class="header-meta-item">🏗 9 Milestones total</span>
+  </div>
+</header>
+
+<!-- ── Overall progress bar ── -->
+<section class="progress-section">
+  <div class="progress-inner">
+    <div class="progress-header">
+      <span class="progress-label">Overall Project Completion</span>
+      <span class="progress-pct">15%</span>
+    </div>
+    <div class="progress-bar-track">
+      <div class="progress-bar-fill" style="width: 15%"></div>
+    </div>
+    <div class="progress-phases">
+      <span class="phase-chip done">M1: Foundation — Complete ✓</span>
+      <span class="phase-chip active">M2: Public Site — In Progress</span>
+      <span class="phase-chip pending">M3: Auth + Profiles</span>
+      <span class="phase-chip pending">M4: Feed</span>
+      <span class="phase-chip pending">M5: Connections + Messaging</span>
+      <span class="phase-chip pending">M6: Hospitals + Rotations</span>
+      <span class="phase-chip pending">M7: Endorsements</span>
+      <span class="phase-chip pending">M8: Moderation + Admin</span>
+      <span class="phase-chip pending">M9: Legal + Launch</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── Main ── -->
+<main class="main">
+
+  <!-- ALERT -->
+  <div class="alert-banner">
+    <span class="alert-icon">🛡</span>
+    <span><strong>Patient Data Policy:</strong> Patient-identifiable data must never be posted publicly. This platform will implement patient-data scanning, warning prompts, and content blocking before any public launch. This is a non-negotiable safety requirement.</span>
+  </div>
+
+  <!-- Info panels -->
+  <p class="section-title">Project Status</p>
+  <div class="info-grid">
+
+    <div class="info-card">
+      <h3><span class="icon icon-blue">🔨</span> Current Build Notes</h3>
+      <ul>
+        <li class="ok">Milestone 1 complete — full project foundation in place</li>
+        <li class="ok">Landing page built — hero, problem, solution, features, referral, safety, CTA</li>
+        <li class="ok">Waitlist form built — all required + optional fields with validation</li>
+        <li class="ok">Confirmation screen with referral link generation (mock)</li>
+        <li class="ok">Reusable UI: Button, Card, Input, Select, Badge, Section</li>
+        <li class="ok">Shared Navbar and Footer components</li>
+        <li>Supabase not yet wired — submissions are mocked locally</li>
+        <li>Admin waitlist view not yet built</li>
+        <li>Referral tracking not yet persisted</li>
+      </ul>
+    </div>
+
+    <div class="info-card">
+      <h3><span class="icon icon-amber">▶</span> Next Action</h3>
+      <ul>
+        <li>Set up Supabase project and configure environment variables</li>
+        <li>Create waitlist_signups table with RLS policies</li>
+        <li>Wire waitlist form to Supabase insert</li>
+        <li>Build admin waitlist view (paginated, searchable)</li>
+        <li>Persist referral codes to Supabase and track usage count</li>
+        <li>Deploy preview to Vercel and smoke-test the full flow</li>
+      </ul>
+    </div>
+
+    <div class="info-card">
+      <h3><span class="icon icon-red">!</span> Risks / Decisions</h3>
+      <ul>
+        <li class="risk">Patient data safety must be enforced at every layer — feed, posts, search</li>
+        <li class="risk">No NHS branding; platform is independent — confirm legal position early</li>
+        <li class="warn">Hospital directory requires admin approval to prevent spam/fake entries</li>
+        <li class="warn">Endorsements limited to connections — prevents gaming the system</li>
+        <li class="warn">No file attachments in messages — reduces data exposure risk</li>
+        <li>Supabase RLS policies needed before any user-facing auth goes live</li>
+        <li>Privacy settings must be granular from day one — retrofitting is hard</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- ────────────────────────────────────── -->
+  <!-- MILESTONES -->
+  <!-- ────────────────────────────────────── -->
+  <p class="section-title">Milestone Tracker</p>
+
+  <!-- M1 — Complete -->
+  <div class="milestone-card done">
+    <div class="milestone-header">
+      <div class="milestone-number done">1</div>
+      <div class="milestone-title-wrap">
+        <div class="milestone-title">Project Foundation</div>
+        <div class="milestone-subtitle">Infrastructure, structure, and visual tracker</div>
+      </div>
+      <span class="badge badge-done">✅ Complete</span>
+    </div>
+    <div class="milestone-body">
+      <div class="milestone-mini-bar">
+        <div class="milestone-mini-bar-fill fill-done" style="width: 100%"></div>
+      </div>
+      <ul class="task-list">
+        <li class="task-item"><span class="task-check check-done">✓</span> Next.js 15 project setup with App Router</li>
+        <li class="task-item"><span class="task-check check-done">✓</span> TypeScript configured</li>
+        <li class="task-item"><span class="task-check check-done">✓</span> Tailwind CSS configured</li>
+        <li class="task-item"><span class="task-check check-done">✓</span> App layout with brand metadata</li>
+        <li class="task-item"><span class="task-check check-done">✓</span> Global styles and brand colour tokens</li>
+        <li class="task-item"><span class="task-check check-done">✓</span> Reusable UI components folder (Button, Card, Input, Select, Badge, Section)</li>
+        <li class="task-item"><span class="task-check check-done">✓</span> Placeholder Supabase client folder</li>
+        <li class="task-item"><span class="task-check check-done">✓</span> Config folder (app.ts, routes)</li>
+        <li class="task-item"><span class="task-check check-done">✓</span> Types folder (User, Profile, Hospital, Post, etc.)</li>
+        <li class="task-item"><span class="task-check check-done">✓</span> Placeholder pages: /, /waitlist, /login, /signup, /feed, /profile, /hospitals, /messages, /admin</li>
+        <li class="task-item"><span class="task-check check-done">✓</span> Visual milestone tracker at /public/milestones.html</li>
+        <li class="task-item"><span class="task-check check-done">✓</span> README.md created</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- M2 — In Progress -->
+  <div class="milestone-card active">
+    <div class="milestone-header">
+      <div class="milestone-number active">2</div>
+      <div class="milestone-title-wrap">
+        <div class="milestone-title">Public Website + Early Profile Waitlist</div>
+        <div class="milestone-subtitle">First public-facing pages and referral system</div>
+      </div>
+      <span class="badge badge-active">🔄 In Progress</span>
+    </div>
+    <div class="milestone-body">
+      <div class="milestone-mini-bar">
+        <div class="milestone-mini-bar-fill fill-active" style="width: 70%"></div>
+      </div>
+      <ul class="task-list">
+        <li class="task-item"><span class="task-check check-done">✓</span> Landing page — hero, problem, solution, features, referral, safety, CTA</li>
+        <li class="task-item"><span class="task-check check-done">✓</span> Shared Navbar and Footer components</li>
+        <li class="task-item"><span class="task-check check-done">✓</span> Early profile signup form (validated, all fields)</li>
+        <li class="task-item"><span class="task-check check-done">✓</span> Referral link generation (mock — not yet persisted)</li>
+        <li class="task-item"><span class="task-check check-done">✓</span> Founding Referrer badge UI and explanation</li>
+        <li class="task-item"><span class="task-check check-done">✓</span> Confirmation screen with copyable link and share buttons</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Supabase waitlist_signups table + insert</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Referral code persistence and usage tracking</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Admin waitlist view (list, search, export)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- M3 -->
+  <div class="milestone-card pending">
+    <div class="milestone-header">
+      <div class="milestone-number pending">3</div>
+      <div class="milestone-title-wrap">
+        <div class="milestone-title">Supabase Auth + User Profiles</div>
+        <div class="milestone-subtitle">Authentication and profile creation</div>
+      </div>
+      <span class="badge badge-pending">⏳ Pending</span>
+    </div>
+    <div class="milestone-body">
+      <div class="milestone-mini-bar">
+        <div class="milestone-mini-bar-fill fill-pending" style="width: 0%"></div>
+      </div>
+      <ul class="task-list">
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Personal email signup</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Login / logout</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Profile creation flow</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Privacy settings (public / connections / private)</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Public/private profile rules and enforcement</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- M4 -->
+  <div class="milestone-card pending">
+    <div class="milestone-header">
+      <div class="milestone-number pending">4</div>
+      <div class="milestone-title-wrap">
+        <div class="milestone-title">Feed</div>
+        <div class="milestone-subtitle">Posts, reactions, sharing and patient-data safety</div>
+      </div>
+      <span class="badge badge-pending">⏳ Pending</span>
+    </div>
+    <div class="milestone-body">
+      <div class="milestone-mini-bar">
+        <div class="milestone-mini-bar-fill fill-pending" style="width: 0%"></div>
+      </div>
+      <ul class="task-list">
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Default logged-in home feed</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Create posts</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Multiple image uploads</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Comments</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Likes / reactions</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Shares / reposts</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Hospital / department tagging</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Patient-data warning before posting</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Patient-data scanning and blocking</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- M5 -->
+  <div class="milestone-card pending">
+    <div class="milestone-header">
+      <div class="milestone-number pending">5</div>
+      <div class="milestone-title-wrap">
+        <div class="milestone-title">Connections + Messaging</div>
+        <div class="milestone-subtitle">Professional network and private communications</div>
+      </div>
+      <span class="badge badge-pending">⏳ Pending</span>
+    </div>
+    <div class="milestone-body">
+      <div class="milestone-mini-bar">
+        <div class="milestone-mini-bar-fill fill-pending" style="width: 0%"></div>
+      </div>
+      <ul class="task-list">
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Search public profiles</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Connection requests</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Message with connection request</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Connections-only private messaging</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> No file attachments in messages</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Report / block users</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- M6 -->
+  <div class="milestone-card pending">
+    <div class="milestone-header">
+      <div class="milestone-number pending">6</div>
+      <div class="milestone-title-wrap">
+        <div class="milestone-title">Hospitals, Departments + Rotations</div>
+        <div class="milestone-subtitle">Institutional directory and career tracking</div>
+      </div>
+      <span class="badge badge-pending">⏳ Pending</span>
+    </div>
+    <div class="milestone-body">
+      <div class="milestone-mini-bar">
+        <div class="milestone-mini-bar-fill fill-pending" style="width: 0%"></div>
+      </div>
+      <ul class="task-list">
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Hospital directory</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> User-submitted hospitals</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Admin approval queue</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Department pages</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Current / previous / future rotations</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Hospital network view</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Privacy-based visibility controls</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- M7 -->
+  <div class="milestone-card pending">
+    <div class="milestone-header">
+      <div class="milestone-number pending">7</div>
+      <div class="milestone-title-wrap">
+        <div class="milestone-title">Endorsements</div>
+        <div class="milestone-subtitle">Structured peer endorsements with approval flow</div>
+      </div>
+      <span class="badge badge-pending">⏳ Pending</span>
+    </div>
+    <div class="milestone-body">
+      <div class="milestone-mini-bar">
+        <div class="milestone-mini-bar-fill fill-pending" style="width: 0%"></div>
+      </div>
+      <ul class="task-list">
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Connections-only endorsements</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Structured endorsement categories</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Recipient approval flow</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Public endorsement display</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Report endorsement</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- M8 -->
+  <div class="milestone-card pending">
+    <div class="milestone-header">
+      <div class="milestone-number pending">8</div>
+      <div class="milestone-title-wrap">
+        <div class="milestone-title">Moderation + Admin</div>
+        <div class="milestone-subtitle">Reports, appeals, audit logs and moderator tools</div>
+      </div>
+      <span class="badge badge-pending">⏳ Pending</span>
+    </div>
+    <div class="milestone-body">
+      <div class="milestone-mini-bar">
+        <div class="milestone-mini-bar-fill fill-pending" style="width: 0%"></div>
+      </div>
+      <ul class="task-list">
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Reports system</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Fake profile reporting</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Blocked posts review</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Appeals workflow</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Admin review tools</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Hospital moderator applications</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Admin audit logs</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- M9 -->
+  <div class="milestone-card pending">
+    <div class="milestone-header">
+      <div class="milestone-number pending">9</div>
+      <div class="milestone-title-wrap">
+        <div class="milestone-title">Legal, Privacy + Launch Readiness</div>
+        <div class="milestone-subtitle">Policies, compliance, and production deployment</div>
+      </div>
+      <span class="badge badge-pending">⏳ Pending</span>
+    </div>
+    <div class="milestone-body">
+      <div class="milestone-mini-bar">
+        <div class="milestone-mini-bar-fill fill-pending" style="width: 0%"></div>
+      </div>
+      <ul class="task-list">
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Privacy Policy</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Terms of Use</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Community Guidelines</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Acceptable Use Policy</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Data Deletion Policy</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Cookie Policy</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Production deployment to Vercel</li>
+        <li class="task-item pending-task"><span class="task-check check-pending"></span> Supabase environment variables configured</li>
+      </ul>
+    </div>
+  </div>
+
+</main>
+
+<!-- ── Footer ── -->
+<footer class="footer">
+  <strong>Scrubbed In</strong> &nbsp;|&nbsp; UK Professional Network for Healthcare Staff &nbsp;|&nbsp;
+  Independent — not NHS-branded &nbsp;|&nbsp; Built with Next.js · Supabase · Vercel
+</footer>
+
+</body>
+</html>
